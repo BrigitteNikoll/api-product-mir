@@ -29,11 +29,13 @@ app.get("/", (request, response) => {
 });
 
 app.use("/api", productRouter);
+
+const PORT = process.env.PORT || 5000;
 /* app.get("/api/products", getAllProducts);
 app.get("/api/products/:id", getOneProduct);
 app.post("/api/products/create", createProduct); */
 
 // Launch server in port 5000
-app.listen(5000, () => {
+app.listen(PORT, () => {
   console.log("Iniatialized server!");
 });
