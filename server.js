@@ -1,6 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import "dotenv/config";
+import jwt from 'jsonwebtoken'
 
 import { productCtrl } from "./api/controllers/index.js";
 import { productRouter, userInfoRouter, userRouter } from "./api/routes/index.js";
