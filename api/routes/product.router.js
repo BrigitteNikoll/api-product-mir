@@ -1,6 +1,8 @@
 import express from "express";
 
 import { productCtrl } from "../controllers/index.js";
+import {validateToken} from "../middleware/index.js"
+
 const {
   getAllProducts,
   getOneProduct,
@@ -20,7 +22,7 @@ const productRoutes = {
   DELETE: "/products/delete/:id",
 };
 
-router.get(productRoutes.GET_ALL, getAllProducts);
+router.get(productRoutes.GET_ALL, validateToken, getAllProducts);
 router.get(productRoutes.GET_ONE, getOneProduct);
 router.post(productRoutes.CREATE, createProduct);
 router.put(productRoutes.UPDATE, findProduct, updateProduct);
