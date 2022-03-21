@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 // Schema products
-const schemaUsers = {
+const schemaUsersInfo = {
   name: String,
   document: String,
   adress: String,
@@ -10,6 +10,6 @@ const schemaUsers = {
 };
 
 // Product model
-const UserInfo = mongoose.model("UserInfo", schemaUsers, "users");
+const UserInfo = mongoose.model("UserInfo", schemaUsersInfo, "users");
 
 export default UserInfo;

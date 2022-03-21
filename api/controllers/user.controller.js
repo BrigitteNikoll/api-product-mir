@@ -1,4 +1,4 @@
-/* import { User } from "../models/index.js"; */
+import { User } from "../models/index.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
@@ -35,17 +35,22 @@ export const login = async (req, res) => {
   }
 };
 
-export const createUser = async (req, res) => { 
+export const createUser = async (req, res) => {
   const { password, document } = req.body;
   console.log("password", password);
-  
-  const passToHash = `${password}${document}`
+
+  const passToHash = `${password}${document}`;
   let hash = await bcrypt.hash(passToHash, 10);
-  console.log({...req.body, password: hash})
 
+  const newUser = new User({ ...req.body, password: hash });
 
-  //login
-/*   bcrypt.compare(password, hash, (err, result) => {
-    console.log("COMPARE", err, result);
-  }); */
-}
+  console.log({ ...req.body, password: hash });
+
+  try {
+    const user = await newUser.save();
+    res.status(201).json(user);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+
+};
