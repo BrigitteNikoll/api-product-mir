@@ -2,25 +2,22 @@ import { User } from "../models/index.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-const username = "Bri";
-const password = "1236";
-
 export const login = async (req, res) => {
-  const { username: userLog, password: passLog } = req.body;
+  const { email, password } = req.body;
 
-  //Mockeando DB
-  const userDb = {
-    id: "5465d4564-561",
-    name: "Brigitte",
-  };
+  const user = await User.find({ email });
+  const userDB = user[0];
+  console.log("USER", user);
 
-  if (username === userLog && password === passLog) {
-    //JWT
-    jwt.sign(
-      userDb,
-      process.env.SECRET_KEY,
-      { expiresIn: "32s" },
-      (error, token) => {
+  if (user.length === 0) res.status(403).send();
+
+  //Validate hash
+  const passToHash = `${password}${userDB.document}`;
+  bcrypt.compare(passToHash, userDB.password, (err, isPassValid) => {
+    console.log(err, isPassValid)
+    if (email === userDB.email && isPassValid) {
+      //JWT
+      jwt.sign({email: userDB.email}, process.env.SECRET_KEY, (error, token) => {
         if (!error) {
           res.status(200).json({
             token,
@@ -28,11 +25,11 @@ export const login = async (req, res) => {
         } else {
           res.status(403).send();
         }
-      }
-    );
-  } else {
-    res.status(403).send();
-  }
+      });
+    } else {
+      res.status(403).send();
+    }
+  });
 };
 
 export const createUser = async (req, res) => {
@@ -52,5 +49,4 @@ export const createUser = async (req, res) => {
   } catch (err) {
     res.status(500).send(err);
   }
-
 };
