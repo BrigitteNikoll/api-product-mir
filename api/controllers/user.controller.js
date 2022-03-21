@@ -1,4 +1,5 @@
 /* import { User } from "../models/index.js"; */
+import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 const username = "Bri";
@@ -15,16 +16,30 @@ export const login = async (req, res) => {
 
   if (username === userLog && password === passLog) {
     //JWT
-    jwt.sign(userDb, process.env.SECRET_KEY, {expiresIn: "32s"}, (error, token) => {
-      if (!error) {
-        res.status(200).json({
-          token,
-        });
-      } else {
-        res.status(403).send();
+    jwt.sign(
+      userDb,
+      process.env.SECRET_KEY,
+      { expiresIn: "32s" },
+      (error, token) => {
+        if (!error) {
+          res.status(200).json({
+            token,
+          });
+        } else {
+          res.status(403).send();
+        }
       }
-    });
+    );
   } else {
     res.status(403).send();
   }
 };
+
+export const createUser = async (req, res) => { 
+  const { password } = req.body;
+  console.log("password", password);
+  
+  bcrypt.hash(password, 10, (err, hash) => {
+    console.log("HASH", err, hash);
+  })
+}
