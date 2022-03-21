@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import "dotenv/config";
 
 import { productCtrl } from "./api/controllers/index.js";
-import { productRouter, userRouter } from "./api/routes/index.js";
+import { productRouter, userInfoRouter } from "./api/routes/index.js";
 const { getAllProducts, getOneProduct, createProduct } = productCtrl;
 
 /* MONGOSSE */
@@ -29,7 +29,7 @@ app.get("/", (request, response) => {
 });
 
 app.use("/api", productRouter);
-app.use("/api", userRouter);
+app.use("/api", userInfoRouter);
 
 const PORT = process.env.PORT || 5000;
 /* app.get("/api/products", getAllProducts);

@@ -1,5 +1,5 @@
 import * as productCtrl from './product.controller.js'; 
-import * as userCtrl from './user.controller.js'; 
+import * as userInfoCtrl from './userInfo.controller.js'; 
 export {
-    productCtrl, userCtrl
+    productCtrl, userInfoCtrl
 }

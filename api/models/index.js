@@ -1,4 +1,4 @@
 import Product from "./products.model.js";
-import User from "./user.model.js";
+import UserInfo from "./userInfo.model.js";
 
-export { Product, User };
+export { Product, UserInfo };
