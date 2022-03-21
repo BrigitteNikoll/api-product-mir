@@ -36,10 +36,16 @@ export const login = async (req, res) => {
 };
 
 export const createUser = async (req, res) => { 
-  const { password } = req.body;
+  const { password, document } = req.body;
   console.log("password", password);
   
-  bcrypt.hash(password, 10, (err, hash) => {
-    console.log("HASH", err, hash);
-  })
+  const passToHash = `${password}${document}`
+  let hash = await bcrypt.hash(passToHash, 10);
+  console.log({...req.body, password: hash})
+
+
+  //login
+/*   bcrypt.compare(password, hash, (err, result) => {
+    console.log("COMPARE", err, result);
+  }); */
 }
