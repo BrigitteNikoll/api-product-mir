@@ -15,7 +15,7 @@ export const login = async (req, res) => {
 
   if (username === userLog && password === passLog) {
     //JWT
-    jwt.sign(userDb, process.env.SECRET_KEY, (error, token) => {
+    jwt.sign(userDb, process.env.SECRET_KEY, {expiresIn: "32s"}, (error, token) => {
       if (!error) {
         res.status(200).json({
           token,
